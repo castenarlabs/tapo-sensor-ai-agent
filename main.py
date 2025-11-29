@@ -7,7 +7,7 @@ from tapo import ApiClient
 
 
 os.environ["GOOGLE_API_KEY"] = "$GOOGLE_API_KEY"
-model = init_chat_model("google_genai:gemini-2.5-flash-lite")
+model = init_chat_model("google_genai:gemini-2.5-flash-lite", temperature=0.0, max_tokens=500)
 hub_ip = "$hub_ip"
 tapo_email = "$tapo_email"
 tapo_password = "$tapo_password"
@@ -52,6 +52,7 @@ system_prompt=("You are a friendly smart home assistant that can help inform use
 agent = create_agent(
     model= model,
     tools=[main],
+
     system_prompt= system_prompt
 )
 #'''

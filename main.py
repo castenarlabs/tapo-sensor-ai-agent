@@ -12,12 +12,13 @@ hub_ip = "$hub_ip"
 tapo_email = "$tapo_email"
 tapo_password = "$tapo_password"
 
+
 @tool()
 def main():
     """
     There is a Hub which is connected to multiple sensors. Fetch temperature and humidity from Tapo sensors.
-    Args: sensor_name: Specific sensor name (e.g. "kitchen") or "all" for all sensors
     Returns all matching sensor readings or full list if "all".
+    You should also advise on the 'humidity' OR 'temperature' levels, if asked specifically.
     """
     # Running ASYNCIO function to fetch Sensor Data in await
     async def fetch_sensors():
@@ -44,15 +45,24 @@ def main():
 
             readings.append(reading)
         return "\n".join(readings)
-
+        ''' #DEBUG
+        result = "\n".join(readings)
+        print(f"Tool Returning: '{result}'")
+        return result or "No sensor data available"
+        '''
     return asyncio.run(fetch_sensors())
+
+    ''' #DEBUG
+    result = asyncio.run(fetch_sensors())
+    print(f"FINAL Returning: '{result}'")
+    return result
+    '''
 #'''
-system_prompt=("You are a friendly smart home assistant that can help inform users of the temperature and "
+system_prompt=("You are a friendly smart home assistant that can help inform users of the temperature or "
                "humidity of your Tapo devices.")
 agent = create_agent(
     model= model,
     tools=[main],
-
     system_prompt= system_prompt
 )
 #'''
@@ -60,20 +70,11 @@ agent = create_agent(
 #asyncio.run(main())
 
 messages = [
-    #{"messages": [{"role": "user", "content": "Fetch Bedroom temperature and humidity?"}]}
-    #{"role": "user", "content": "What's the temperature & humidity in the bedroom?"},
-    {"role": "user", "content": "What's the temperature in the bathroom?"}
+    {"role": "system", "content": system_prompt},
+    {"role": "user", "content": "What is the humidity in the bathroom? Is it too humid? What do you think?"}
     ]
 
 response = agent.invoke({"messages": messages})
-
 print(response["messages"][-1].content)
-
-
-
-
-
-
-
 
 #print(response)

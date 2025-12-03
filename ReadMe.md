@@ -1,8 +1,12 @@
+## Tapo Sensors with AI Agents
+#### An Python script that can fetch Tapo Sensors values (Temperature and Humidity) and an AI Agent that can understand and respond.
+
+
 ## Install Necessary Packages
 1. pip install -r requirements.txt
 
 (!) The Tapo API Client connects to your local hub, so you will need the script to run in your local network. 
-However, you can always export the local network and port to a public URL.
+However, you can always expose the local network and port to a public URL. - Ngrok for example
 
 ### How to run
  
@@ -23,7 +27,7 @@ However, you can always export the local network and port to a public URL.
    1. ```
       LangChainAI % python local-server.py 
       INFO:     Started server process [14450]
-      INFO:     Waiting for application startup.
+      INFO:     Waiting for clearapplication startup.
       INFO:     Application startup complete.
       INFO:     Uvicorn running on http://0.0.0.0:2024 (Press CTRL+C to quit)
       ```  

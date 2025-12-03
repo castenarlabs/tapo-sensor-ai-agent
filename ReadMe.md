@@ -1,6 +1,12 @@
+## Install Necessary Packages
+1. pip install -r requirements.txt
+
+(!) The Tapo API Client connects to your local hub, so you will need the script to run in your local network. 
+However, you can always export the local network and port to a public URL.
+
 ### How to run
  
-# main.py
+#### main.py
 1. Navigate to the script directory and run `python main.py`
 2. Output:
    1. ```
@@ -10,7 +16,7 @@
       The alarm has been rung for 2 seconds.
       ```
       
-# local-server.py
+#### local-server.py
 
 1. Navigate to the script directory and run `local-server.py`
 2. Output:

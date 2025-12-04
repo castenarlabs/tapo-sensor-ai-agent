@@ -9,15 +9,14 @@ import asyncio
 from fastapi import FastAPI
 import uvicorn
 
+
 #Environment setup
 os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY", "$GOOGLE_API_KEY")
 hub_ip = os.getenv("HUB_IP", "$hub_ip")
 tapo_email = os.getenv("TAPO_EMAIL", "$tapo_email")
 tapo_password = os.getenv("TAPO_PASSWORD", "$tapo_password")
 
-
-# Initialize AI model
-model = init_chat_model("google_genai:gemini-2.5-flash-lite", temperature=1.0, max_tokens=500)
+model = init_chat_model("google_genai:gemini-2.5-flash-lite", temperature=0.0, max_tokens=1000)
 
 # Define tools using @tool decorator
 @tool()
@@ -83,11 +82,12 @@ def check_alarm_status():
 
     return asyncio.run(check_stop_alarm())
 
-# Create the agent
+# Create agent
 system_prompt = (
     "You are a friendly smart home assistant that can help inform users of the temperature OR "
     "humidity of your Tapo devices. You also will trigger the alarm when explicitly asked. "
-    "ALWAYS give a FINAL ANSWER summarizing ALL tools results."
+    "You shall provide a clear summary of ALL tool results when asked explicitly."
+    "ALWAYS give a FINAL ANSWER summarizing ALL tools results based on what was asked."
 )
 
 agent = create_agent(
@@ -103,7 +103,7 @@ api_app = FastAPI(
     version="1.0.0"
 )
 
-#POST Request for FAST API
+#POST Request for FAST_API
 @api_app.post("/")
 
 async def chat(messages: list[dict]):
@@ -115,8 +115,9 @@ async def chat(messages: list[dict]):
     # Invoke agent
     result = await agent.ainvoke({"messages": langchain_messages})
     #Print  messages content only
-    content = result["messages"][-1].content
+    #print(result)
 
+    content = result["messages"][-1].content
     # return result #To see full content
     return content
 

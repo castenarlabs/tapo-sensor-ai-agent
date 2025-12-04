@@ -6,7 +6,7 @@
 1. pip install -r requirements.txt
 
 (!) The Tapo API Client connects to your local hub, so you will need the script to run in your local network. 
-However, you can always expose the local network and port to a public URL. - Ngrok for example
+You can always expose the local network and port to a public URL. - Ngrok for example
 
 ### How to run
  
